@@ -1,5 +1,6 @@
 ﻿using MauiAppTempoAgora.Models;
 using Newtonsoft.Json.Linq;
+using System.Net;
 
 namespace MauiAppTempoAgora.Services
 {
@@ -40,14 +41,15 @@ namespace MauiAppTempoAgora.Services
                         visibility = (int)rascunho["visibility"],
                         sunrise = sunrise.ToString(),
                         sunset = sunset.ToString(),
-                        
-                    };// Fecha objeto do tempo.
 
-                } // Fecha if se o status do servidor foi sucesso.
-            } // Fecha laço usinng.
-
-
-
+                    };
+                }
+                else if (resp.StatusCode == HttpStatusCode.NotFound)
+                {
+                    // Retorna null se a cidade não for encontrada
+                    return null;
+                }
+            }
             return t;
         }
     }
